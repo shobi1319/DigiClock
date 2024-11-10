@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Switch, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const DigitalClock = () => {
   const [time, setTime] = useState(new Date());
   const [is24Hour, setIs24Hour] = useState(false);
 
-  // Update time every second
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Format time based on 24-hour or 12-hour setting
   const formattedTime = time.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
@@ -19,14 +17,12 @@ const DigitalClock = () => {
     hour12: !is24Hour,
   });
 
-  // Format date to show full weekday and date
   const formattedDate = time.toLocaleDateString([], {
     weekday: 'long',
     month: 'long',
     day: 'numeric',
   });
 
-  // Toggle between 24-hour and 12-hour format
   const toggleFormat = () => setIs24Hour((prev) => !prev);
 
   return (
@@ -38,6 +34,15 @@ const DigitalClock = () => {
           {is24Hour ? 'Switch to 12-Hour' : 'Switch to 24-Hour'}
         </Text>
       </TouchableOpacity>
+
+      {/* Developer Section */}
+      <View style={styles.developerSection}>
+        <Image
+          source={{ uri: 'https://media.licdn.com/dms/image/v2/D4D03AQEcAr_NwjOmwA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1668787145006?e=2147483647&v=beta&t=jxnLkmNOUzQh4_gRK4eRQAbO149TY5JIA62a1jc43cw' }} // 
+          style={styles.avatar}
+        />
+        <Text style={styles.developerName}>Shoaib 1319</Text> 
+      </View>
     </View>
   );
 };
@@ -74,6 +79,21 @@ const styles = StyleSheet.create({
   toggleButtonText: {
     color: '#e94560',
     fontSize: 16,
+  },
+  developerSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  developerName: {
+    color: '#ffffff',
+    fontSize: 18,
   },
 });
 
